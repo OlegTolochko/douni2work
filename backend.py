@@ -3,8 +3,7 @@ import time
 from flask import Flask, g, current_app, jsonify
 import sqlite3
 
-app = Flask(__name__)
-
+app = Flask(__name__, static_folder='frontend/dist', static_url_path='/')
 
 def get_db():
     if 'db' not in g:
@@ -101,11 +100,9 @@ def isOnline():
     return response
 
 
-@app.route("/")
-def root():
-    cur = get_db().cursor()
-    cur.execute("SELECT * FROM measurements")
-    results = []
-    for row in cur.fetchall():
-        results.append(dict(row))
-    return jsonify(results)
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def root(path):
+    return app.send_static_file("index.html")
+
+

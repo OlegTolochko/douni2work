@@ -1,0 +1,60 @@
+[
+  {
+    "text": "Perhaps it shouldn't have trusted the S-Bahn this morning.",
+    "scenarios": [
+      "offline"
+    ]
+  },
+{
+    "text": "Looks like Uni2Work got lost on its way to class...we'll send a search party to bring it back.",
+    "scenarios": [
+      "offline"
+    ]
+  },
+  {
+    "text": "It is taking longer to respond than a professor to an email during the holidays.",
+    "scenarios": [
+      "offline",
+      "slow"
+    ]
+  },
+  {
+    "text": "I heard is taking a course on procrastination, and it's acing it.",
+    "scenarios": [
+      "offline",
+      "slow"
+    ]
+  },
+  {
+    "text": "I think Uni2Work is trying to teach us the value of patience and perseverance in academia.",
+    "scenarios": [
+      "offline",
+      "slow"
+    ]
+  },
+  {
+    "text": "It's pulling an all-nighter trying to stay online.",
+    "scenarios": [
+      "offline",
+      "slow"
+    ]
+  },
+  {
+    "text": "I guess you'll have to get to work, too.",
+    "scenarios": [
+      "online"
+    ]
+  },
+  {
+    "text": "Uni2Work is fully caffeinated and ready for your academic needs.",
+    "scenarios": [
+      "online"
+    ]
+  },
+  {
+    "text": "Uni2Work is up and running, ready to handle all your academic procrastination needs.",
+    "scenarios": [
+      "online"
+    ]
+  }
+]
