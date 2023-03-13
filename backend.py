@@ -5,7 +5,15 @@ import sqlite3
 
 app = Flask(__name__, static_folder='frontend/dist', static_url_path='/')
 
+import config
+import os
+
+
 def get_db():
+    if config.DATABASE_LOCATION == ":":
+        print("Please specify a database location with DATABASE_LOCATION")
+    os.chdir(config.DATABASE_LOCATION)
+
     if 'db' not in g:
         g.db = sqlite3.connect(
             "data.sqlite",
@@ -34,7 +42,7 @@ def statusHistory(timespan):
        category
 FROM (SELECT *,
              CASE WHEN status_code == 200 THEN 1 ELSE 0 END    AS works,
-             round((unixepoch(datetime('now')) - unixepoch(date)) / (?/90))                   AS category
+             round((strftime("%s",datetime('now')) - date) / (?/90))                   AS category
       FROM measurements
       WHERE category < 90)
 GROUP BY category
@@ -68,13 +76,13 @@ def responseTimes(timespan):
     seconds = seconds_in_timespan(timespan)
 
     cur.execute("""SELECT avg(response_time) as response_time,
-       round(avg(unixepoch(date))) as timestamp,
-       round((unixepoch(datetime('now')) - unixepoch(date)) / (? / 90)) as ind
+       round(avg(date)) as timestamp,
+       round((strftime("%s", datetime('now')) - date) / (? / 90)) as ind
 FROM measurements
 WHERE ind < 90
 GROUP BY ind;""", (seconds,))
 
-    results = [None]*90
+    results = [None] * 90
     for row in cur.fetchall():
         results[int(row["ind"])] = dict(row)
     for pos in range(len(results)):
@@ -104,5 +112,3 @@ def isOnline():
 @app.route("/<path:path>")
 def root(path):
     return app.send_static_file("index.html")
-
-

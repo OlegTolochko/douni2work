@@ -4,8 +4,14 @@ import requests
 import sqlite3
 import os
 
+import config
 def measure():
-    os.chdir("/media/niels/data/python/douni2work")
+
+    # Change directory to correct directory
+    if config.DATABASE_LOCATION == ":":
+        print("Please specify a database location with DATABASE_LOCATION")
+    os.chdir(config.DATABASE_LOCATION)
+
     response_google = requests.get("https://www.google.com")
     baseline_time = response_google.elapsed.total_seconds()
 
@@ -28,7 +34,7 @@ def measure():
     cursor = conn.cursor()
 
     cursor.execute("INSERT INTO measurements (response_time, type, baseline_time, status_code, date) VALUES (?, ?, ?,?, "
-                   "CURRENT_TIMESTAMP);", (response_time, "LANDING_PAGE",baseline_time, status_code))
+                   "strftime('%s', datetime('now')));", (response_time, "LANDING_PAGE",baseline_time, status_code))
     cursor.close()
     conn.commit()
     conn.close()
